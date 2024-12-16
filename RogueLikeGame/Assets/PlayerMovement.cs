@@ -3,51 +3,43 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f; // Speed of the character
+
     private Rigidbody2D rb;
-    private Vector2 movement;
+    private Vector2 movement; // Movement vector
+    private Animator animator; // Reference to Animator
+    private SpriteRenderer spriteRenderer; // To flip the sprite
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>(); // Grab the Animator component
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Grab the SpriteRenderer for flipping
     }
 
     void Update()
     {
-        //reset movement vector
-        movement = Vector2.zero;
-        
-        // Capture input from arrow keys or WASD
-        if (Input.GetKey(KeyCode.D)) {
-            movement.x = 1;
-        }
+        // Capture input from WASD or Arrow Keys
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W)) {
-            movement.x = 1;
-            movement.y = 1;
-        }
+        // Normalize movement to ensure diagonal speed isn't faster
+        movement = movement.normalized;
 
-         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S)) {
-            movement.x = 1;
-            movement.y = -1;
-        }
+        // Set Animator Parameters
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetBool("isRunning", movement.magnitude > 0); // Check if the player is moving
 
-         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S)) {
-            movement.x = -1;
-            movement.y = -1;
+        // Flip the sprite for left/right movement
+        if (movement.x < 0)
+        {
+            spriteRenderer.flipX = true; // Face left
         }
-
-         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W)) {
-            movement.x = -1;
-            movement.y = 1;
+        else if (movement.x > 0)
+        {
+            spriteRenderer.flipX = false; // Face right
         }
-
-         if (Input.GetKey(KeyCode.A)) {
-            movement.x = -1;
-        }
-
     }
-
-       
 
     void FixedUpdate()
     {
