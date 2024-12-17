@@ -14,6 +14,7 @@ public class PlayerActions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetMouseButton(0)) {
              animator.SetTrigger("Attack1");
         }
@@ -22,4 +23,5 @@ public class PlayerActions : MonoBehaviour
         }
         
     }
+    
 }

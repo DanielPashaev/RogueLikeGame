@@ -6,9 +6,9 @@ public class BanditBehavior : MonoBehaviour
 
     public float moveSpeed = 8f;
 
-    public float attackRange = 1.5f; // Distance to stop and attack
+    public float attackRange = 1f; // Distance to stop and attack
 
-     public Transform player; // Reference to the player's Transform
+    public Transform player; // Reference to the player's Transform
 
     private Animator animator;
 
@@ -37,7 +37,6 @@ public class BanditBehavior : MonoBehaviour
     {
         Vector2 direction = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector2.Distance(player.position, transform.position);
-
         if (movement.x < 0) {
             spriteRenderer.flipX = false;
         } else if (movement.x > 0) {
@@ -58,7 +57,6 @@ public class BanditBehavior : MonoBehaviour
         IEnumerator AttackPlayer() {
             isAttacking = true;
             animator.SetBool("IsRunning", false);
-            yield return new WaitForSeconds(0.3f); // time before bandit attacks
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(0.5f); // time for animation of attack
             isAttacking = false;
