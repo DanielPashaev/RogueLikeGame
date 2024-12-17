@@ -58,6 +58,13 @@ public class BanditBehavior : MonoBehaviour
         }
 
         }
+        void OnCollisionEnter2D(Collision2D collision2D) {
+            if (collision2D.gameObject.CompareTag("Player")) {
+                PlayerHealth playerHealth = collision2D.gameObject.GetComponent<PlayerHealth>();
+                playerHealth.TakeDamage();
+                Debug.Log("Player collided, take damage!");
+            }
+        }
         IEnumerator AttackPlayer() {
 
             isAttacking = true;
