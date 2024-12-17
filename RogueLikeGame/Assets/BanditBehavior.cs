@@ -35,6 +35,10 @@ public class BanditBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerHealth.isPlayerDead) {
+            StopMovement();
+            return;
+        }
         Vector2 direction = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector2.Distance(player.position, transform.position);
         if (movement.x < 0) {
@@ -54,7 +58,15 @@ public class BanditBehavior : MonoBehaviour
         }
 
         }
+        void OnCollisionEnter2D(Collision2D collision2D) {
+            if (collision2D.gameObject.CompareTag("Player")) {
+                PlayerHealth playerHealth = collision2D.gameObject.GetComponent<PlayerHealth>();
+                playerHealth.TakeDamage();
+                Debug.Log("Player collided, take damage!");
+            }
+        }
         IEnumerator AttackPlayer() {
+
             isAttacking = true;
             animator.SetBool("IsRunning", false);
             animator.SetTrigger("Attack");
@@ -64,12 +76,30 @@ public class BanditBehavior : MonoBehaviour
             yield return new WaitForSeconds(1f); // time for cooldown after 
             isCoolingDown = false;
         }
+        void CheckAttackHit() {
+            // Check if the player is still within range
+            float distanceToPlayer = Vector2.Distance(player.position, transform.position);
+            if (distanceToPlayer <= attackRange) {
+        // Damage the player
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+            {
+            playerHealth.TakeDamage();
+            Debug.Log("Player hit by Bandit!");
+            }
+     }
+        }
         void FixedUpdate() {
         // Apply movement to the Rigidbody2D
         if (!isAttacking && !isCoolingDown)
         {
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
+        }
+        void StopMovement() {
+            movement = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+            animator.SetBool("IsRunning", false);
         }
     }
 

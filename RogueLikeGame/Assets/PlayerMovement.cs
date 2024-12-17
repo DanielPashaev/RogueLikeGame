@@ -43,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bandit")) {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = Vector2.zero; // Stop the player from being pushed
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            rb.linearVelocity = Vector2.zero; // Stop the player from being pushed
         }
     }
 
