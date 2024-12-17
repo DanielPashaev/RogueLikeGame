@@ -35,6 +35,10 @@ public class BanditBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerHealth.isPlayerDead) {
+            StopMovement();
+            return;
+        }
         Vector2 direction = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector2.Distance(player.position, transform.position);
         if (movement.x < 0) {
@@ -85,7 +89,7 @@ public class BanditBehavior : MonoBehaviour
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
         }
-        public void StopMovement() {
+        void StopMovement() {
             movement = Vector2.zero;
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("IsRunning", false);

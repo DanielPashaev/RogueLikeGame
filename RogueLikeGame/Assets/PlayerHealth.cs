@@ -8,12 +8,14 @@ public class PlayerHealth : MonoBehaviour
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
-
+    public static bool isPlayerDead = false;
+    private Vector2 movement;
     private Animator animator;
-    private BanditBehavior bandit; // Cached reference to BanditBehavior
-
+    private BanditBehavior bandit;
+    private PlayerMovement playerMovement;
     void Start()
     {
+        playerMovement = GetComponent<PlayerMovement>();
         // Find and cache the Bandit reference
         GameObject banditObject = GameObject.Find("Bandit");
         if (banditObject != null)
@@ -45,6 +47,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (isPlayerDead) {
+            return;
+        }
         health -= 1;
         animator.SetTrigger("Hurt");
 
@@ -56,17 +61,10 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
+        isPlayerDead = true;
         animator.SetBool("noBlood", false);
         animator.SetTrigger("Death");
-
-        // Stop the Bandit's movement if it exists
-        if (bandit != null)
-        {
-            bandit.StopMovement();
-        }
-        else
-        {
-            Debug.LogWarning("Bandit reference not found when trying to stop movement.");
-        }
+        playerMovement.enabled = false;
+        Debug.Log("Player has died!");
     }
 }
