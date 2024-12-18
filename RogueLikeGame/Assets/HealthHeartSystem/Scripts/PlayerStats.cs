@@ -1,22 +1,18 @@
-﻿/*
- *  Author: ariel oliveira [o.arielg@gmail.com]
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
     public delegate void OnHealthChangedDelegate();
     public OnHealthChangedDelegate onHealthChangedCallback;
 
-    #region Sigleton
+    #region Singleton
     private static PlayerStats instance;
     public static PlayerStats Instance
     {
         get
         {
             if (instance == null)
-                instance = FindObjectOfType<PlayerStats>();
+                instance = FindAnyObjectByType<PlayerStats>();
             return instance;
         }
     }
@@ -52,16 +48,14 @@ public class PlayerStats : MonoBehaviour
             maxHealth += 1;
             health = maxHealth;
 
-            if (onHealthChangedCallback != null)
-                onHealthChangedCallback.Invoke();
-        }   
+            onHealthChangedCallback?.Invoke();
+        }
     }
 
     void ClampHealth()
     {
         health = Mathf.Clamp(health, 0, maxHealth);
 
-        if (onHealthChangedCallback != null)
-            onHealthChangedCallback.Invoke();
+        onHealthChangedCallback?.Invoke();
     }
 }

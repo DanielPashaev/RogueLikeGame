@@ -6,14 +6,19 @@ public class PlayerActions : MonoBehaviour
 
     private Animator animator;
 
-    private PlayerDistance playerDistance;
-
     private bool isBlocking = false;
     private bool isAttacking = false;
+
+    private float attackRange = 1f;
+     private BanditBehavior bandit;
     void Start()
     {
         animator = GetComponent<Animator>();
-        playerDistance = GetComponent<PlayerDistance>();
+        GameObject banditObject = GameObject.Find("Bandit");
+        if (banditObject != null)
+        {
+            bandit = banditObject.GetComponent<BanditBehavior>();
+        }
 
     }
 
@@ -30,6 +35,21 @@ public class PlayerActions : MonoBehaviour
             isBlocking = true;
              animator.SetTrigger("Block");
         
+        }
+    }
+    public void CheckAndHitIfInRange() {
+        if (bandit == null) {
+        // The bandit no longer exists; just return early or handle this case
+        return;
+        }
+            float distance = Vector2.Distance(transform.position, bandit.transform.position);
+            if (distance <= attackRange) {
+                BanditHealth banditHealth = bandit.GetComponent<BanditHealth>();
+                if (banditHealth != null)
+                {
+                    banditHealth.HurtBandit();
+            }
+
         }
     }
     void endOfAttack() {
