@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 57103145}
   - component: {fileID: 57103146}
   - component: {fileID: 57103147}
+  - component: {fileID: 57103148}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -352,6 +353,18 @@ MonoBehaviour:
   - {fileID: 1925797171}
   fullHeart: {fileID: 21300000, guid: fed24bd82cefc0c4a8ef64dab6231b53, type: 3}
   emptyHeart: {fileID: 21300002, guid: fed24bd82cefc0c4a8ef64dab6231b53, type: 3}
+--- !u!114 &57103148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57103139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b35afff55d5c1418544eaaec8af5bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &96304800
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +379,7 @@ GameObject:
   - component: {fileID: 96304805}
   - component: {fileID: 96304807}
   - component: {fileID: 96304806}
+  - component: {fileID: 96304808}
   m_Layer: 0
   m_Name: Bandit
   m_TagString: Bandit
@@ -553,6 +567,18 @@ MonoBehaviour:
   moveSpeed: 8
   attackRange: 1
   player: {fileID: 0}
+--- !u!114 &96304808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96304800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f9622520a44be4980c9e5e382c3260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 17, y: -97.728}
+  m_AnchoredPosition: {x: 11.919983, y: -126.92996}
   m_SizeDelta: {x: 23.84, y: 22.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &885697212
@@ -918,7 +944,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -333.09, y: 59.927}
+  m_AnchoredPosition: {x: -333, y: 98}
   m_SizeDelta: {x: 23.84, y: 22.485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925797171
@@ -993,7 +1019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.128}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -357, y: 60}
+  m_AnchoredPosition: {x: -361, y: 98}
   m_SizeDelta: {x: 23.98, y: 22.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1959164087
