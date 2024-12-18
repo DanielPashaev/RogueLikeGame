@@ -65,7 +65,7 @@ King's Reckoning is licensed under the MIT License. See `LICENSE` for details.
 ## Contact
 
 For any questions or feedback, please reach out to:
-- **Developer:** Dan Pas
+- **Developer:** Daniel & Sean Pashaev
 - **Email:** danp3320@outlook.com
 - **LinkedIn** https://www.linkedin.com/in/daniel-pashaev-a61574296/
 
