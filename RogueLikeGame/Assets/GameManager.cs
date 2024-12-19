@@ -45,4 +45,7 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();              // Quit the application
     }
+    public bool IsPaused() {
+        return isPaused;
+    }
 }

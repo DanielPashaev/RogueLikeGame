@@ -10,7 +10,8 @@ public class PlayerActions : MonoBehaviour
     private bool isAttacking = false;
 
     private float attackRange = 1f;
-     private BanditBehavior bandit;
+    private BanditBehavior bandit;
+    public GameManager gameManager;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -25,6 +26,9 @@ public class PlayerActions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameManager != null && gameManager.IsPaused()) {
+            return;
+        }
         if (Input.GetMouseButton(0) && !isAttacking) {
             isAttacking = true;
             animator.SetTrigger("Attack1");

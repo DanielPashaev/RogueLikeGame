@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movement; // Movement vector
     private Animator animator; // Reference to Animator
     private SpriteRenderer spriteRenderer; // To flip the sprite
+    public GameManager gameManager;
 
     void Start()
     {
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (gameManager != null && gameManager.IsPaused()) {
+            return;
+        }
         // Capture input from WASD or Arrow Keys
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
