@@ -6,7 +6,7 @@ public class TimeManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public TextMeshProUGUI timerText;
-    private float survivalTime;
+    public static float survivalTime;
     private bool isGameActive = true;
 
     void Update() {
