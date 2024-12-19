@@ -42,9 +42,9 @@ public class BanditBehavior : MonoBehaviour
         Vector2 direction = (player.position - transform.position).normalized;
         float distanceToPlayer = Vector2.Distance(player.position, transform.position);
         if (movement.x < 0) {
-            spriteRenderer.flipX = false;
-        } else if (movement.x > 0) {
             spriteRenderer.flipX = true;
+        } else if (movement.x > 0) {
+            spriteRenderer.flipX = false;
         }
 
         if (distanceToPlayer <= attackRange && !isCoolingDown && !isAttacking) { // in range to attack and off cooldown

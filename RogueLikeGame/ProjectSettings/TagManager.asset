@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bandit
+  - Timer
   layers:
   - Default
   - TransparentFX

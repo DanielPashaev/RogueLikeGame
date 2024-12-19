@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player; // Reference to the player's Transform
+   public Transform player; // Reference to the player's Transform
     public Vector3 offset;   // Offset to keep some space between player and camera
 
     void Update()
@@ -13,4 +13,5 @@ public class CameraFollow : MonoBehaviour
             transform.position = player.position + offset;
         }
     }
+    
 }

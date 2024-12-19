@@ -752,7 +752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15.600006, y: -38.585}
+  m_AnchoredPosition: {x: 11.920044, y: -105.92999}
   m_SizeDelta: {x: 23.84, y: 22.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &885697212
@@ -861,7 +861,7 @@ Canvas:
   m_GameObject: {fileID: 1061562150}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 1556509584}
   m_Layer: 5
   m_Name: TimerText
-  m_TagString: Untagged
+  m_TagString: Timer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -932,7 +932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -352.5, y: 132.83}
+  m_AnchoredPosition: {x: -300, y: 132.69}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1556509584
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1113,7 +1113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330.2, y: 118.93}
+  m_AnchoredPosition: {x: -338.09, y: 118.93}
   m_SizeDelta: {x: 23.84, y: 22.485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925797171
@@ -1188,7 +1188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.128}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -357.6, y: 119}
+  m_AnchoredPosition: {x: -362, y: 119}
   m_SizeDelta: {x: 23.98, y: 22.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1959164087
