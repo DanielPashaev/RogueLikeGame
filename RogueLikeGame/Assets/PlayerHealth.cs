@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -66,5 +68,7 @@ public class PlayerHealth : MonoBehaviour
         animator.SetTrigger("Death");
         playerMovement.enabled = false;
         Debug.Log("Player has died!");
+        SceneManager.LoadScene("GameOverScene"); 
+
     }
 }
