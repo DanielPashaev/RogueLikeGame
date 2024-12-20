@@ -22,6 +22,6 @@ public class TimeManager : MonoBehaviour
     }
     public void StopTimer() {
         isGameActive = false;
+        PlayerPrefs.SetFloat("SurvivalTime", survivalTime);
     }
-
 }

@@ -5,7 +5,6 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenuCanvas; // Assign the Pause Menu Canvas in the 
     private bool isPaused = false;
     public PauseMenuBlur blur;
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) // Check for Escape key press
@@ -37,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     public void QuitToMainMenu()
     {
+        TimeManager.survivalTime = 0f;
         Time.timeScale = 1f;             // Reset time scale before switching scenes
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Load Main Menu
     }
