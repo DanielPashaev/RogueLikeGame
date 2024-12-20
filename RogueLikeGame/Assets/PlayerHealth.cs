@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class PlayerHealth : MonoBehaviour
 {
     public int health;
@@ -11,14 +10,19 @@ public class PlayerHealth : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
     public static bool isPlayerDead = false;
-    private Vector2 movement;
+    private PlayerMovement playerMovement;
     private Animator animator;
     private BanditBehavior bandit;
-    private PlayerMovement playerMovement;
+
     void Start()
     {
+        // Reset player death state at scene start
+        isPlayerDead = false;
+
+        // Optionally reset health if needed
+        // health = numOfMaxHealth; // Uncomment if you want full health on retry
+
         playerMovement = GetComponent<PlayerMovement>();
-        // Find and cache the Bandit reference
         GameObject banditObject = GameObject.Find("Bandit");
         if (banditObject != null)
         {
@@ -34,24 +38,24 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        // Prevent health from exceeding max health
         if (health > numOfMaxHealth)
         {
             health = numOfMaxHealth;
         }
 
-        // Update heart UI
         for (int i = 0; i < hearts.Length; i++)
         {
-            hearts[i].sprite = i < health ? fullHeart : emptyHeart;
+            if (hearts[i] != null)
+            {
+                hearts[i].sprite = i < health ? fullHeart : emptyHeart;
+            }
         }
     }
 
     public void TakeDamage()
     {
-        if (isPlayerDead) {
-            return;
-        }
+        if (isPlayerDead) return;
+
         health -= 1;
         animator.SetTrigger("Hurt");
 
@@ -68,7 +72,6 @@ public class PlayerHealth : MonoBehaviour
         animator.SetTrigger("Death");
         playerMovement.enabled = false;
         Debug.Log("Player has died!");
-        SceneManager.LoadScene("GameOverScene"); 
-
+        SceneManager.LoadScene("GameOverScene");
     }
 }
