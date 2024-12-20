@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     public void QuitToMainMenu()
     {
         Time.timeScale = 1f;             // Reset time scale before switching scenes
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene"); // Load Main Menu
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Load Main Menu
     }
 
     public void QuitGame()
