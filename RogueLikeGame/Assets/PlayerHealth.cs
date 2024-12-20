@@ -65,6 +65,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void GiveHealth() {
+        if (health != numOfMaxHealth) {
+            health++;
+        }
+    }
+
     void Die()
     {
         isPlayerDead = true;
