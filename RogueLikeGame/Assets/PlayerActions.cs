@@ -6,14 +6,22 @@ public class PlayerActions : MonoBehaviour
 
     private Animator animator;
 
-    private bool isBlocking = false;
+    public bool isBlocking = false;
     private bool isAttacking = false;
 
     private float attackRange = 1f;
+
+    private float blockRange = 1f;
     private BanditBehavior bandit;
     public GameManager gameManager;
+
+    private PlayerHealth playerHealth;
+
+    public int numOfBlocks = 0;
     void Start()
     {
+        playerHealth = GetComponent<PlayerHealth>();
+
         animator = GetComponent<Animator>();
         GameObject banditObject = GameObject.Find("Bandit");
         if (banditObject != null)
@@ -55,6 +63,25 @@ public class PlayerActions : MonoBehaviour
             }
 
         }
+    }
+
+    public void checkAndBlockIfInRange() {
+        if (bandit == null) {
+            return;
+        }
+        float distance = Vector2.Distance(transform.position, bandit.transform.position);
+            if (distance <= blockRange) {
+                BanditBehavior banditBehavior = bandit.GetComponent<BanditBehavior>();
+                if (banditBehavior != null)
+                {
+                    banditBehavior.StunBandit();
+                    numOfBlocks++;
+                    if (numOfBlocks == 5) {
+                        playerHealth.GiveHealth();
+                        numOfBlocks = 0;
+                    }
+                }
+            }
     }
     void endOfAttack() {
         isAttacking = false;

@@ -22,13 +22,19 @@ public class BanditBehavior : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    public OverMenuManager overMenuManager;
+
+    private PlayerActions playerActions;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        player = GameObject.Find("Player").transform;
+        playerActions = player.GetComponent<PlayerActions>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.Find("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -65,18 +71,28 @@ public class BanditBehavior : MonoBehaviour
                 Debug.Log("Player collided, take damage!");
             }
         }
-        IEnumerator AttackPlayer() {
 
-            isAttacking = true;
-            animator.SetBool("IsRunning", false);
-            animator.SetTrigger("Attack");
-            yield return new WaitForSeconds(0.5f); // time for animation of attack
+        public void ResetBandit() {
             isAttacking = false;
-            isCoolingDown = true;
-            yield return new WaitForSeconds(1f); // time for cooldown after 
             isCoolingDown = false;
+            animator.SetBool("IsRunning", false);
+            animator.ResetTrigger("Attack");
+            transform.position = new Vector2(0, 0); // Reset position (adjust as needed)
+    }
+        IEnumerator AttackPlayer() {
+                isAttacking = true;
+                animator.SetBool("IsRunning", false);
+                animator.SetTrigger("Attack");
+                yield return new WaitForSeconds(0.5f); // time for animation of attack
+                isAttacking = false;
+                isCoolingDown = true;
+                yield return new WaitForSeconds(1f); // time for cooldown after 
+                isCoolingDown = false;
         }
         void CheckAttackHit() {
+            if (playerActions.isBlocking == true) {
+                return;
+            }
             // Check if the player is still within range
             float distanceToPlayer = Vector2.Distance(player.position, transform.position);
             if (distanceToPlayer <= attackRange) {
@@ -95,6 +111,25 @@ public class BanditBehavior : MonoBehaviour
         {
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
+        }
+
+        public IEnumerator StunBandit() {
+            animator.SetTrigger("Death");
+            yield return new WaitForSeconds(.5f);
+            animator.SetTrigger("Recover");
+            yield return new WaitForSeconds(.5f);
+
+        }
+        public IEnumerator BanditFall() {
+            animator.SetTrigger("Death");
+            yield return new WaitForSeconds(.5f);
+
+        }
+
+        public IEnumerator BanditRecover() {
+            animator.SetTrigger("Recover");
+            yield return new WaitForSeconds(.5f);
+
         }
         void StopMovement() {
             movement = Vector2.zero;
