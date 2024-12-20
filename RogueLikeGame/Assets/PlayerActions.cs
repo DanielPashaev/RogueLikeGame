@@ -6,7 +6,7 @@ public class PlayerActions : MonoBehaviour
 
     private Animator animator;
 
-    public bool isBlocking = false;
+    public static bool isBlocking = false;
     private bool isAttacking = false;
 
     private float attackRange = 1f;
@@ -65,7 +65,7 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    public void checkAndBlockIfInRange() {
+    public void CheckAndBlockIfInRange() {
         if (bandit == null) {
             return;
         }
@@ -74,7 +74,6 @@ public class PlayerActions : MonoBehaviour
                 BanditBehavior banditBehavior = bandit.GetComponent<BanditBehavior>();
                 if (banditBehavior != null)
                 {
-                    banditBehavior.StunBandit();
                     numOfBlocks++;
                     if (numOfBlocks == 5) {
                         playerHealth.GiveHealth();
@@ -83,10 +82,10 @@ public class PlayerActions : MonoBehaviour
                 }
             }
     }
-    void endOfAttack() {
+    void EndOfAttack() {
         isAttacking = false;
     }
-    void endOfBlock() {
+    void EndOfBlock() {
         isBlocking = false;
     }
 }

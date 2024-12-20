@@ -15,6 +15,8 @@ public class BanditBehavior : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 initialPosition;
 
+    
+
     void Awake()
     {
         // Get references here, so they're ready before Respawn is called
@@ -105,6 +107,9 @@ public class BanditBehavior : MonoBehaviour
 
     void CheckAttackHit()
     {
+        if(PlayerActions.isBlocking) {
+            return;
+        }
         float distanceToPlayer = Vector2.Distance(player.position, transform.position);
         if (distanceToPlayer <= attackRange)
         {
