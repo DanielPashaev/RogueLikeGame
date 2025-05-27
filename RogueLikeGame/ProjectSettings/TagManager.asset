@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bandit
   - Timer
+  - Wizard
   layers:
   - Default
   - TransparentFX

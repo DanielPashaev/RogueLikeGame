@@ -3,46 +3,62 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     public float speed = 10f;
-    public float lifetime = 3f;
-
     private Vector2 direction;
     private bool hasExploded = false;
 
     private Animator animator;
 
-    public void SetDirection(Vector2 dir) {
+    public void SetDirection(Vector2 dir)
+    {
         direction = dir.normalized;
-        Destroy(gameObject, lifetime);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!hasExploded) {
+        if (!hasExploded)
+        {
             transform.Translate(direction * speed * Time.deltaTime);
         }
     }
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (!hasExploded && (other.CompareTag("Player") || other.CompareTag("Bandit")))
-        hasExploded = true;
-       if (rb != null)
+        void OnTriggerEnter2D(Collider2D other)
 {
-        rb.linearVelocity = Vector2.zero;
+    if (hasExploded) return;
+
+    if (other.CompareTag("Player"))
+    {
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage();
+        }
+
+        TriggerExplosion(); // Always explode after hitting player
+    }
+    else if (!other.isTrigger)
+    {
+        TriggerExplosion(); // Explode on hitting any solid (wall, ground, etc.)
+    }
 }
 
-        if (animator != null) {
-            animator.Play("Explode");
-            Destroy(gameObject, .4f);
-        }}
-        private Rigidbody2D rb;
+void TriggerExplosion()
+{
+    hasExploded = true;
+    speed = 0f; // Stop movement
+    GetComponent<Collider2D>().enabled = false;
 
-        private void Awake() {
-            rb = GetComponent<Rigidbody2D>();
-        }
+    if (animator != null)
+    {
+        animator.Play("Explode", 0); // Play explosion animation
     }
+
+    Destroy(gameObject, 0.5f); // Wait for animation to finish
+}
+        
+            }
+        
 

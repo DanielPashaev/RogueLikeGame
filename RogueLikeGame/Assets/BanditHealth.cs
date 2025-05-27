@@ -36,8 +36,13 @@ public class BanditHealth : MonoBehaviour
     }
     IEnumerator Die() {
         animator.SetTrigger("Death");
+        if (bandit != null)
+    {
+        bandit.enabled = false; // stop AI logic
+    }
         yield return new WaitForSeconds(.5f);
-        Destroy(bandit.gameObject);
+        GameObject current = gameObject;
+    Destroy(current);
     }
 }
 
