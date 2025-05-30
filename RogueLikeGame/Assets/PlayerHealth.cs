@@ -10,19 +10,20 @@ public class PlayerHealth : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
     public static bool isPlayerDead = false;
+
     private PlayerMovement playerMovement;
+    private PlayerActions playerActions;
     private Animator animator;
     private BanditBehavior bandit;
 
     void Start()
     {
-        // Reset player death state at scene start
         isPlayerDead = false;
 
-        // Optionally reset health if needed
-        // health = numOfMaxHealth; // Uncomment if you want full health on retry
-
         playerMovement = GetComponent<PlayerMovement>();
+        playerActions = GetComponent<PlayerActions>(); // NEW: Get reference to PlayerActions
+        animator = GetComponent<Animator>();
+
         GameObject banditObject = GameObject.Find("Bandit");
         if (banditObject != null)
         {
@@ -32,8 +33,6 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.LogError("Bandit GameObject not found. Make sure it's named 'Bandit' in the Hierarchy.");
         }
-
-        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -57,6 +56,13 @@ public class PlayerHealth : MonoBehaviour
         if (isPlayerDead) return;
 
         health -= 1;
+
+        // NEW: Reset attack and block state in case hurt interrupts them
+        if (playerActions != null)
+        {
+            playerActions.ResetState();
+        }
+
         animator.SetTrigger("Hurt");
 
         if (health <= 0)
@@ -65,8 +71,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void GiveHealth() {
-        if (health != numOfMaxHealth) {
+    public void GiveHealth()
+    {
+        if (health < numOfMaxHealth)
+        {
             health++;
         }
     }
@@ -76,7 +84,12 @@ public class PlayerHealth : MonoBehaviour
         isPlayerDead = true;
         animator.SetBool("noBlood", false);
         animator.SetTrigger("Death");
-        playerMovement.enabled = false;
+
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
         Debug.Log("Player has died!");
         SceneManager.LoadScene("GameOverScene");
     }

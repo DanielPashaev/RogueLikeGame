@@ -5,15 +5,18 @@ public class WizardHealth : MonoBehaviour
 {
     private int health = 1;
 
+    private bool isDead = false;
+
+
     private Animator animator;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
 
 
     void Awake()
-{
-    spriteRenderer = GetComponent<SpriteRenderer>();
-}
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -22,66 +25,68 @@ public class WizardHealth : MonoBehaviour
 
     public void HurtWizard()
     {
+        if (isDead) return; // Prevent duplicate death calls
 
         health--;
         StartCoroutine(FlashWhite());
 
-
-        // Optional: freeze movement on hit
         if (rb != null)
             rb.velocity = Vector2.zero;
 
-        // Optionally flip or flash here
-
         if (health <= 0)
         {
+            isDead = true; // Mark as dead
             StartCoroutine(Die());
         }
     }
-
     IEnumerator HurtEffect()
-{
-    SpriteRenderer sr = GetComponent<SpriteRenderer>();
-    Color originalColor = sr.color;
-    Vector3 originalPosition = transform.position;
-
-    sr.color = Color.red;
-
-    // Shake position
-    float shakeTime = 0.2f;
-    float elapsed = 0f;
-    while (elapsed < shakeTime)
     {
-        transform.position = originalPosition + (Vector3)Random.insideUnitCircle * 0.05f;
-        elapsed += Time.deltaTime;
-        yield return null;
-    }
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color originalColor = sr.color;
+        Vector3 originalPosition = transform.position;
 
-    transform.position = originalPosition;
-    sr.color = originalColor;
-}
-IEnumerator FlashWhite()
-{
-     Color originalColor = spriteRenderer.color;
-    spriteRenderer.color = Color.white;
-    yield return new WaitForSeconds(0.1f);
-    spriteRenderer.color = originalColor;
-}
+        sr.color = Color.red;
+
+        // Shake position
+        float shakeTime = 0.2f;
+        float elapsed = 0f;
+        while (elapsed < shakeTime)
+        {
+            transform.position = originalPosition + (Vector3)Random.insideUnitCircle * 0.05f;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = originalPosition;
+        sr.color = originalColor;
+    }
+    IEnumerator FlashWhite()
+    {
+        Color originalColor = spriteRenderer.color;
+        spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = originalColor;
+    }
 
     IEnumerator Die()
     {
-        // Disable other animator parameters if needed
-    animator.SetBool("IsRunning", false);
+        animator.SetBool("IsRunning", false);
+        animator.Play("Death", 0, 0f);
 
-    // Force death animation
-    animator.Play("Death", 0, 0f);  // Layer 0, time = 0
+        if (rb != null)
+            rb.velocity = Vector2.zero;
 
-    // Optional: freeze movement
-    if (TryGetComponent<Rigidbody2D>(out var rb))
-        rb.velocity = Vector2.zero;
+        // STOP behavior immediately
+        WizardBehavior behavior = GetComponent<WizardBehavior>();
+        if (behavior != null)
+            behavior.enabled = false;
 
-    yield return new WaitForSeconds(2f); // Wait for animation
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
 
-    Destroy(gameObject);
+        yield return new WaitForSeconds(2f); // Let death animation play
+
+        Destroy(gameObject);
     }
 }

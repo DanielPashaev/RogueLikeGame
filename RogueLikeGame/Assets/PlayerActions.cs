@@ -23,23 +23,45 @@ public class PlayerActions : MonoBehaviour
     }
 
     void Update()
+{
+    if (gameManager != null && gameManager.IsPaused())
+        return;
+
+    // Attack input
+    if (Input.GetMouseButtonDown(0) && !isAttacking && !isBlocking)
     {
-        if (gameManager != null && gameManager.IsPaused())
-            return;
-
-        if (Input.GetMouseButton(0) && !isAttacking)
-        {
-            isAttacking = true;
-            animator.SetTrigger("Attack1");
-        }
-
-        if (Input.GetMouseButton(1) && !isBlocking)
-        {
-            isBlocking = true;
-            animator.SetTrigger("Block");
-        }
+        isAttacking = true;
+        animator.SetTrigger("Attack1");
+        Debug.Log("Attack triggered");
     }
 
+    // Block input
+    if (Input.GetMouseButtonDown(1) && !isBlocking && !isAttacking)
+    {
+        isBlocking = true;
+        animator.SetTrigger("Block");
+        Debug.Log("Block triggered");
+    }
+}
+
+public void ParryProjectile()
+{
+    numOfBlocks++;
+    Debug.Log("Projectile parried! Block count: " + numOfBlocks);
+
+    if (numOfBlocks >= 5)
+    {
+        playerHealth.GiveHealth();
+        numOfBlocks = 0;
+    }
+}
+
+    public void ResetState()
+{
+    isAttacking = false;
+    isBlocking = false;
+    Debug.Log("Player state reset after damage");
+}
     public void CheckAndHitIfInRange()
     {
         foreach (BanditBehavior bandit in FindObjectsOfType<BanditBehavior>())

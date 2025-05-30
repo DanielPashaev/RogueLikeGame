@@ -31,6 +31,13 @@ public class WizardSpawner : MonoBehaviour
     {
         Vector2 spawnOffset = Random.insideUnitCircle * spawnRadius;
         Vector3 spawnPosition = transform.position + new Vector3(spawnOffset.x, spawnOffset.y, 0f);
-        Instantiate(wizardPrefab, spawnPosition, Quaternion.identity);
+if (wizardPrefab != null)
+{
+    Instantiate(wizardPrefab, spawnPosition, Quaternion.identity);
+}
+else
+{
+    Debug.LogWarning("Wizard prefab has been destroyed or not assigned.");
+}
     }
 }
